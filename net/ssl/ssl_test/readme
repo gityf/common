@@ -1,0 +1,6 @@
+mk_server.sh: compile ssl-server.cpp
+mk_client.sh: compile ssl-client.cpp
+make_key.sh: gen public and private key
+
+run_server.sh: run server
+run_client.sh: run client

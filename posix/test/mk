@@ -1,0 +1,2 @@
+gcc -o commandinput_test commandinput_test.cpp -I.. -I../.. libposix.a ../base/libbase.a -lstdc++
+gcc -o commandoutput_test commandoutput_test.cpp -I.. -I../.. libposix.a ../base/libbase.a -lstdc++
