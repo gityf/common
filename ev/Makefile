@@ -7,6 +7,8 @@ OBJS =  eventloop.o
 OBJS += eventpoll.o
 OBJS += eventhandler.o
 OBJS += eventfd.o
+OBJS += event_timer.o
+OBJS += ngx_rbtree.o
 
 libsockpoll.a : $(OBJS)
 	ar -rus $@ $^
