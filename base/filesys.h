@@ -101,6 +101,8 @@ namespace common {
         // append to file.
         static int appendFile(const string& file, const string& data);
         static int appendFile(const string& file, const char* dataPtr, int len);
+        static int overWriteFile(const string& file, const string& data);
+        static int overWriteFile(const string& file, const char* dataPtr, int len);
 
         // change work directory
         static bool chdir(const std::string& path);
@@ -116,6 +118,8 @@ namespace common {
         static std::string tmpdir();
         // get separator
         static std::string sep();
+        // get execution path.
+        static std::string getExecPath();
     };
 } // namespace common
 

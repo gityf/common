@@ -466,8 +466,20 @@ int FileSys::appendFile(const string& file, const string& data) {
     return appendFile(file, data.data(), data.length());
 }
 
+int FileSys::overWriteFile(const string &file, const string &data) {
+    return overWriteFile(file, data.data(), data.length());
+}
+
 int FileSys::appendFile(const string& file, const char* dataPtr, int len) {
     std::ofstream ofs(file, std::ofstream::app | std::ofstream::binary);
+    if (ofs.is_open() && ofs.good()) {
+        ofs.write(dataPtr, len);
+    }
+    return len;
+}
+
+int FileSys::overWriteFile(const string& file, const char* dataPtr, int len) {
+    std::ofstream ofs(file, std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
     if (ofs.is_open() && ofs.good()) {
         ofs.write(dataPtr, len);
     }
@@ -524,5 +536,11 @@ std::string FileSys::tmpdir() {
 std::string FileSys::sep()
 {
     return "/";
+}
+
+std::string FileSys::getExecPath() {
+    char result[PATH_MAX];
+    ssize_t count = ::readlink("/proc/self/exe", result, PATH_MAX);
+    return std::string(result, (count > 0) ? count : 0);
 }
 } // namespace common
