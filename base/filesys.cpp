@@ -475,6 +475,7 @@ int FileSys::appendFile(const string& file, const char* dataPtr, int len) {
     if (ofs.is_open() && ofs.good()) {
         ofs.write(dataPtr, len);
     }
+	ofs.close();
     return len;
 }
 
@@ -483,6 +484,7 @@ int FileSys::overWriteFile(const string& file, const char* dataPtr, int len) {
     if (ofs.is_open() && ofs.good()) {
         ofs.write(dataPtr, len);
     }
+	ofs.close();
     return len;
 }
 

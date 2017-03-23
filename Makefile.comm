@@ -1,6 +1,6 @@
 #CFLAGS = -DDEBUG_LOG -D_DEBUG
 #CFLAGS = -DDEBUG_LOG
-CFLAGS = -DLINUX
+#CFLAGS = -DLINUX
 
 CC=gcc -std=c++11 -g -O3 $(CFLAGS)
 CC=gcc -std=c++11 -g $(CFLAGS)
