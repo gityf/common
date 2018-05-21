@@ -13,7 +13,7 @@ using std::string;
 class FileLoader {
 public:
     FileLoader();
-    ~FileLoader();
+    virtual ~FileLoader();
     virtual bool handleLine(const string& line) = 0;
     // load file.
     bool load(const string& file);
