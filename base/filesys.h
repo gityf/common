@@ -50,7 +50,8 @@ namespace common {
         static bool resize(const string& path, size_t newSize);
         // file inote.
         static uint64_t fileNode(const string& file);
-
+        // file device no.
+        static uint64_t fileDeviceId(const string& file);
         // get file modify time.
         static time_t FileTime(const string &file);
         // get file path with-out file name.
