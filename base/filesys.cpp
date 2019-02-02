@@ -21,9 +21,9 @@ using namespace std;
 
 namespace common {
 
-// \param file ÎÄ¼şÂ·¾¶Ãû
-// \retval true ÎÄ¼ş´æÔÚ
-// \retval false ²»´æÔÚ
+// \param file æ–‡ä»¶è·¯å¾„å
+// \retval true æ–‡ä»¶å­˜åœ¨
+// \retval false ä¸å­˜åœ¨
 bool FileSys::IsFileExist(const string &file) {
     //return (access(file.c_str(), F_OK) == 0) ? true : false;
     struct stat buff;
@@ -39,9 +39,9 @@ bool FileSys::IsFileExist(const string &file) {
     return true;
 }
 
-// \param file ÎÄ¼şÂ·¾¶Ãû
-// \retval true ÎÄ¼ş´æÔÚÇÒÎª·ûºÅÁ´½Ó
-// \retval false ²»´æÔÚ»òÕß²»ÊÇ·ûºÅÁ´½Ó
+// \param file æ–‡ä»¶è·¯å¾„å
+// \retval true æ–‡ä»¶å­˜åœ¨ä¸”ä¸ºç¬¦å·é“¾æ¥
+// \retval false ä¸å­˜åœ¨æˆ–è€…ä¸æ˜¯ç¬¦å·é“¾æ¥
 bool FileSys::IsLink(const string &file) {
     struct stat statbuf;
 
@@ -51,9 +51,9 @@ bool FileSys::IsLink(const string &file) {
     return false;
 }
 
-// \param dile Ä¿Â¼Â·¾¶Ãû
-// \retval true Ä¿Â¼´æÔÚ
-// \retval false ²»´æÔÚ»òÕß²»ÊÇÄ¿Â¼
+// \param dile ç›®å½•è·¯å¾„å
+// \retval true ç›®å½•å­˜åœ¨
+// \retval false ä¸å­˜åœ¨æˆ–è€…ä¸æ˜¯ç›®å½•
 bool FileSys::IsDir(const string &file) {
     struct stat statbuf;
 
@@ -90,10 +90,10 @@ FileSys::Type getType(const std::string& path) {
 
     return FileSys::File;
 }
-// \param srcfile Ô­ÎÄ¼şÃû
-// \param destfile ĞÂÁ´½ÓÃû
-// \retval true ²Ù×÷³É¹¦
-// \retval false ²»³É¹¦
+// \param srcfile åŸæ–‡ä»¶å
+// \param destfile æ–°é“¾æ¥å
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false ä¸æˆåŠŸ
 bool FileSys::link(const string &srcfile, const string &destfile) {
     if (::link(srcfile.c_str(), destfile.c_str()) == 0)
         return true;
@@ -108,8 +108,8 @@ bool FileSys::symlink(const string &srcfile, const string &destfile) {
         return false;
 }
 
-// \param file ÎÄ¼şÂ·¾¶Ãû
-// \return ÈôÎÄ¼ş´æÔÚÔò·µ»Ø´óĞ¡,·ñÔò·µ»Ø-1
+// \param file æ–‡ä»¶è·¯å¾„å
+// \return è‹¥æ–‡ä»¶å­˜åœ¨åˆ™è¿”å›å¤§å°,å¦åˆ™è¿”å›-1
 size_t FileSys::FileSize(const string &file) {
     struct stat statbuf;
 
@@ -136,8 +136,17 @@ uint64_t FileSys::fileNode(const string &file) {
     else
         return 0;
 }
-// \param file ÎÄ¼şÂ·¾¶Ãû
-// \return ÈôÎÄ¼ş´æÔÚÔò·µ»ØÆä×îºó¸ü¸ÄÊ±¼ä,·ñÔò·µ»Ø-1
+	
+uint64_t FileSys::fileDeviceId(const string &file) {
+    struct stat statbuf;
+
+    if (stat(file.c_str(), &statbuf) == 0)
+        return statbuf.st_dev;
+    else
+        return 0;
+}
+// \param file æ–‡ä»¶è·¯å¾„å
+// \return è‹¥æ–‡ä»¶å­˜åœ¨åˆ™è¿”å›å…¶æœ€åæ›´æ”¹æ—¶é—´,å¦åˆ™è¿”å›-1
 time_t FileSys::FileTime(const string &file) {
     struct stat statbuf;
 
@@ -147,8 +156,8 @@ time_t FileSys::FileTime(const string &file) {
         return -1;
 }
 
-// \param file ÎÄ¼şÂ·¾¶Ãû
-// \return ÈôÄÜÈ¡µÃÎÄ¼şÂ·¾¶Ôò·µ»Ø,·ñÔò·µ»Ø¿Õ×Ö·û´®
+// \param file æ–‡ä»¶è·¯å¾„å
+// \return è‹¥èƒ½å–å¾—æ–‡ä»¶è·¯å¾„åˆ™è¿”å›,å¦åˆ™è¿”å›ç©ºå­—ç¬¦ä¸²
 string FileSys::FilePath(const string &file) {
     size_t p;
     if ((p=file.rfind("/")) != file.npos)
@@ -158,8 +167,8 @@ string FileSys::FilePath(const string &file) {
     return string("");
 }
 
-// \param file ÎÄ¼şÂ·¾¶Ãû
-// \return ÈôÄÜÈ¡µÃÎÄ¼şÃû³ÆÔò·µ»Ø,·ñÔò·µ»ØÔ­ÎÄ¼şÂ·¾¶Ãû³Æ
+// \param file æ–‡ä»¶è·¯å¾„å
+// \return è‹¥èƒ½å–å¾—æ–‡ä»¶åç§°åˆ™è¿”å›,å¦åˆ™è¿”å›åŸæ–‡ä»¶è·¯å¾„åç§°
 string FileSys::FileName(const string &file) {
     size_t p;
     if ((p=file.rfind("/")) != file.npos)
@@ -185,10 +194,10 @@ string FileSys::OnlyLibName(const string& libName) {
     return fileName;
 }
 
-// \param oldname Ô­ÎÄ¼şÃû
-// \param newname ĞÂÎÄ¼şÃû
-// \retval true ²Ù×÷³É¹¦
-// \retval false Ê§°Ü
+// \param oldname åŸæ–‡ä»¶å
+// \param newname æ–°æ–‡ä»¶å
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false å¤±è´¥
 bool FileSys::RenameFile(const string &oldname, const string &newname) {
     if (::rename(oldname.c_str(), newname.c_str()) != -1)
         return true;
@@ -196,10 +205,10 @@ bool FileSys::RenameFile(const string &oldname, const string &newname) {
         return false;
 }
 
-// \param srcfile Ô­ÎÄ¼şÃû
-// \param destfile Ä¿µÄÎÄ¼şÃû,ÎÄ¼şÊôĞÔÎª0666
-// \retval true ²Ù×÷³É¹¦
-// \retval false Ê§°Ü
+// \param srcfile åŸæ–‡ä»¶å
+// \param destfile ç›®çš„æ–‡ä»¶å,æ–‡ä»¶å±æ€§ä¸º0666
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false å¤±è´¥
 bool FileSys::CopyFile(const string &srcfile, const string &destfile) {
     FILE *src=NULL, *dest=NULL;
     if ((src=fopen(srcfile.c_str(),"rb")) == NULL) {
@@ -232,9 +241,9 @@ bool FileSys::CopyFile(const string &srcfile, const string &destfile) {
     return true;
 }
 
-// \param file ÎÄ¼şÂ·¾¶Ãû
-// \retval true É¾³ı³É¹¦
-// \retval false ÎÄ¼ş²»´æÔÚ»òÕßÉ¾³ıÊ§°Ü
+// \param file æ–‡ä»¶è·¯å¾„å
+// \retval true åˆ é™¤æˆåŠŸ
+// \retval false æ–‡ä»¶ä¸å­˜åœ¨æˆ–è€…åˆ é™¤å¤±è´¥
 bool FileSys::DelFile(const string &file) {
     if (remove(file.c_str()) == 0)
         return true;
@@ -242,10 +251,10 @@ bool FileSys::DelFile(const string &file) {
         return false;
 }
 
-// \param srcfile Ô­ÎÄ¼şÃû
-// \param destfile ĞÂÎÄ¼şÃû
-// \retval true ²Ù×÷³É¹¦
-// \retval false Ê§°Ü
+// \param srcfile åŸæ–‡ä»¶å
+// \param destfile æ–°æ–‡ä»¶å
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false å¤±è´¥
 bool FileSys::MoveFile(const string &srcfile, const string &destfile) {
     if (RenameFile(srcfile,destfile))
         return true;
@@ -259,9 +268,9 @@ bool FileSys::MoveFile(const string &srcfile, const string &destfile) {
     return false;
 }
 
-// \param dir ²ÎÊıÎªÄ¿Â¼Â·¾¶Ãû
-// \return ·µ»Ø½á¹ûÎªÎÄ¼ş¼°×ÓÄ¿Â¼ÁĞ±í,×ÓÄ¿Â¼µÄµÚÒ»¸ö×Ö·ûÎª '/',
-// ·µ»Ø½á¹ûÖĞ²»°üÀ¨´ú±íµ±Ç°¼°ÉÏÒ»¼¶Ä¿Â¼µÄ "/.", "/.."
+// \param dir å‚æ•°ä¸ºç›®å½•è·¯å¾„å
+// \return è¿”å›ç»“æœä¸ºæ–‡ä»¶åŠå­ç›®å½•åˆ—è¡¨,å­ç›®å½•çš„ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸º '/',
+// è¿”å›ç»“æœä¸­ä¸åŒ…æ‹¬ä»£è¡¨å½“å‰åŠä¸Šä¸€çº§ç›®å½•çš„ "/.", "/.."
 void FileSys::ListFiles(const string &dir, vector<string> *files) {
     string file;
     DIR *pdir = NULL;
@@ -280,11 +289,11 @@ void FileSys::ListFiles(const string &dir, vector<string> *files) {
     }
 }
 
-// \param dir Òª´´½¨µÄÄ¿Â¼,ÈôÉÏ²ãÄ¿Â¼²»´æÔÚÔò×Ô¶¯´´½¨
-// \param mode ´´½¨Ä¿Â¼È¨ÏŞ,Ä¬ÈÏÎªS_IRWXU|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH(0755)
-// ³É¹¦·µ»Øtrue, ·ñÔò·µ»Øfalse.
-// \retval true ²Ù×÷³É¹¦
-// \retval false Ê§°Ü
+// \param dir è¦åˆ›å»ºçš„ç›®å½•,è‹¥ä¸Šå±‚ç›®å½•ä¸å­˜åœ¨åˆ™è‡ªåŠ¨åˆ›å»º
+// \param mode åˆ›å»ºç›®å½•æƒé™,é»˜è®¤ä¸ºS_IRWXU|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH(0755)
+// æˆåŠŸè¿”å›true, å¦åˆ™è¿”å›false.
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false å¤±è´¥
 bool FileSys::CreateDir(const string &dir, const mode_t mode) {
     // check
     size_t len = dir.length();
@@ -313,17 +322,17 @@ bool FileSys::CreateDir(const string &dir, const mode_t mode) {
     return true;
 }
 
-// \param srcdir Ô­Ä¿Â¼
-// \param destdir Ä¿µÄÄ¿Â¼
-// \retval true ²Ù×÷³É¹¦
-// \retval false Ê§°Ü
+// \param srcdir åŸç›®å½•
+// \param destdir ç›®çš„ç›®å½•
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false å¤±è´¥
 bool FileSys::CopyDir(const string &srcdir, const string &destdir) {
     vector<string> files;
     ListFiles(srcdir, &files);
     string from;
     string to;
 
-    // ´´½¨Ä¿±êÄ¿Â¼
+    // åˆ›å»ºç›®æ ‡ç›®å½•
     if (!IsFileExist(destdir))
         CreateDir(destdir);
 
@@ -331,7 +340,7 @@ bool FileSys::CopyDir(const string &srcdir, const string &destdir) {
         from = srcdir + "/" + files[i];
         to = destdir + "/" + files[i];
 
-        // ×ÓÄ¿Â¼,µİ¹éµ÷ÓÃ
+        // å­ç›®å½•,é€’å½’è°ƒç”¨
         if (files[i][0] == '/') {
              if (!CopyDir(from,to))
                 return false;
@@ -343,19 +352,19 @@ bool FileSys::CopyDir(const string &srcdir, const string &destdir) {
     return true;
 }
 
-// \param dir ÒªÉ¾³ıµÄÄ¿Â¼
-// \retval true ²Ù×÷³É¹¦
-// \retval false Ê§°Ü
+// \param dir è¦åˆ é™¤çš„ç›®å½•
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false å¤±è´¥
 bool FileSys::DelDir(const string &dir) {
     vector<string> files;
     ListFiles(dir, &files);
     string todel;
 
-    // É¾³ıÎÄ¼ş
+    // åˆ é™¤æ–‡ä»¶
     for (size_t i=0; i<files.size(); ++i) {
         todel = dir + "/" + files[i];
 
-        // ×ÓÄ¿Â¼,µİ¹éµ÷ÓÃ
+        // å­ç›®å½•,é€’å½’è°ƒç”¨
         if (files[i][0] == '/') {
              if (!DelDir(todel))
                 return false;
@@ -364,17 +373,17 @@ bool FileSys::DelDir(const string &dir) {
         }
     }
 
-    // É¾³ıÄ¿Â¼
+    // åˆ é™¤ç›®å½•
     if (rmdir(dir.c_str()) == 0)
         return true;
 
     return false;
 }
 
-// \param srcdir Ô­Ä¿Â¼
-// \param destdir Ä¿µÄÄ¿Â¼
-// \retval true ²Ù×÷³É¹¦
-// \retval false Ê§°Ü
+// \param srcdir åŸç›®å½•
+// \param destdir ç›®çš„ç›®å½•
+// \retval true æ“ä½œæˆåŠŸ
+// \retval false å¤±è´¥
 bool FileSys::MoveDir(const string &srcdir, const string &destdir) {
     if (RenameFile(srcdir,destdir))
         return true;
@@ -388,8 +397,8 @@ bool FileSys::MoveDir(const string &srcdir, const string &destdir) {
     return false;
 }
 
-// \param fd ÎÄ¼ş¾ä±ú
-// \param type ËøÄ£Ê½£¬¿ÉÑ¡F_WRLCK¡¢F_RDLCK¡¢F_UNLCK
+// \param fd æ–‡ä»¶å¥æŸ„
+// \param type é”æ¨¡å¼ï¼Œå¯é€‰F_WRLCKã€F_RDLCKã€F_UNLCK
 void FileSys::LockFile(int fd, const int type) {
     struct flock lck;
     lck.l_start = 0;
@@ -406,9 +415,9 @@ void FileSys::LockFile(int fd, const int type) {
     return;
 }
 
-// \param fd ÎÄ¼ş¾ä±ú
-// \retval true ÎÄ¼şÒÑ±»Ëø
-// \retval false ÎÄ¼şÎ´±»Ëø
+// \param fd æ–‡ä»¶å¥æŸ„
+// \retval true æ–‡ä»¶å·²è¢«é”
+// \retval false æ–‡ä»¶æœªè¢«é”
 bool FileSys::IsLocked(int fd) {
     struct flock lck;
     lck.l_start = 0;
@@ -424,10 +433,10 @@ bool FileSys::IsLocked(int fd) {
         return true;
 }
 
-// \param file ÎÄ¼şÂ·¾¶
-// \param mode ÎÄ¼ş´ò¿ªÄ£Ê½£¬Óëfopen()Í¬²ÎÊıÒâÒåÏàÍ¬
-// \param type ËøÄ£Ê½£¬¿ÉÑ¡F_WRLCK¡¢F_RDLCK¡¢F_UNLCK
-// \return ÎÄ¼ş¾ä±ú£¬Ê§°Ü·µ»ØNULL
+// \param file æ–‡ä»¶è·¯å¾„
+// \param mode æ–‡ä»¶æ‰“å¼€æ¨¡å¼ï¼Œä¸fopen()åŒå‚æ•°æ„ä¹‰ç›¸åŒ
+// \param type é”æ¨¡å¼ï¼Œå¯é€‰F_WRLCKã€F_RDLCKã€F_UNLCK
+// \return æ–‡ä»¶å¥æŸ„ï¼Œå¤±è´¥è¿”å›NULL
 FILE* FileSys::LockFileOpen(const string &file, const char* mode, const int type) {
     FILE *fp;
     mode_t mask = umask(0);
