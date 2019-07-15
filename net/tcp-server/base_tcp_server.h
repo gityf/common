@@ -64,8 +64,8 @@ namespace common {
             _baseHandler = handlerPtr;
         }
 
-        BaseHandler *getBaseHandler() {
-
+        BaseHandler *get_base_handler() {
+            return _baseHandler;
         }
         
         // callback functions

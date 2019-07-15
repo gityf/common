@@ -25,7 +25,11 @@ void tcp_server::on_read(struct bufferevent* bev, void* arg) {
     const char* data = (const char*)evbuffer_pullup(evbuff, len);
     int count = 0;
 
-    BaseHandler *handler;
+    BaseHandler *handler = get_base_handler();
+    if (NULL == handler) {
+    	bufferevent_free(bev);
+    	return;
+    }
     while(true) {
         int ret = handler->check_complate(data+offset, len-offset);
         if(ret == -1) {
