@@ -1,15 +1,25 @@
+/*
+** Copyright (C) 2017 Wang Yaofu
+** All rights reserved.
+**
+**Author:Wang Yaofu voipman@qq.com
+**Description: The header file of RateLimiter.
+*/
 #pragma once
 
 #include <stdint.h>
 #include <sys/time.h>
 #include <mutex>
 
-const static int kDefaultMaxCount = 10000;
-const static int kSec2Usec = 1000000;
+
 class RateLimiter {
 public:
+    const static int kDefaultMaxCount = 10000;
+    const static int kSec2Usec = 1000000;
     RateLimiter() {
         maxCount_ = kDefaultMaxCount;
+        interval_ = 100000;
+        lastTimeUsecs_ = 0;
         curCount_ = 0;
     }
     // interval is Microsecond
