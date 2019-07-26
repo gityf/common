@@ -13,7 +13,7 @@
 using namespace std;
 using namespace common;
 
-class TestSerializable {
+class TestSerializable : public Serializable {
 public:
      /**
      * Serialize to a stream.

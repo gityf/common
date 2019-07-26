@@ -46,6 +46,8 @@ clean:
 install :
 	test -d ../test || mkdir -p ../test
 	cp unittest ../test
+cb_ut:
+	gcc -I ../ -o cb_ut circuitbreaker_unittest.cpp ut/test_harness.cpp -lstdc++
 
 $(OBJDIR)%.o : %.cpp
 	$(CC) $(INC) -c $< -o $@
