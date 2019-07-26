@@ -41,13 +41,15 @@ $(PROJECT) : $(OBJS) $(MODULE)
 	@echo "+--------------------------------------------+"
 
 clean:
-	rm -rf *.o *.a *_unittest
+	rm -rf *.o *.a *_unittest *_ut
 
 install :
 	test -d ../test || mkdir -p ../test
 	cp unittest ../test
 cb_ut:
 	gcc -I ../ -o cb_ut circuitbreaker_unittest.cpp ut/test_harness.cpp -lstdc++
+id_ut:
+	gcc -I ../ -o id_ut snowflakeid_unittest.cpp ut/test_harness.cpp -lstdc++
 
 $(OBJDIR)%.o : %.cpp
 	$(CC) $(INC) -c $< -o $@
