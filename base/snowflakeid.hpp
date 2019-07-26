@@ -38,9 +38,9 @@ class SnowFlakeId {
     const static uint32_t kDataCenterIdLeftShift = kWorkerIdLeftShift + kWorkerIdBits;
     // left shift bits of timestamp
     const static uint32_t kTimestampLeftShift = kDataCenterIdLeftShift + kDataCenterIdBits;
-    // max value of data center id
+    // max value of data center id is 31
     const static uint32_t kMaxDataCenterId = -1 ^ (-1 << kDataCenterIdBits);
-    // max value of sequence
+    // max value of sequence is 4095
     const static uint32_t kSequenceMask = -1 ^ (-1 << kSequenceBits);
 public:
     SnowFlakeId() {
