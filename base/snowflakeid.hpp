@@ -69,7 +69,7 @@ public:
         }
         lastTimestamp_ = nowMs_;
         to = ((nowMs_ - kFromEpoch) << kTimestampLeftShift)
-                | (datacenterId_ << datacenterId_)
+                | (datacenterId_ << kDataCenterIdLeftShift)
                 | (workerId_ << kWorkerIdLeftShift)
                 | sequence_;
         return true;
