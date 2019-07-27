@@ -33,7 +33,12 @@ public:
     }
     Slice& trimSpace();
 
-    inline char operator[] (size_t n) const { return pb_[n]; }
+    void remove_prefix(size_t n) {
+        assert(n < size());
+        pb_ += n;
+    }
+
+    inline char operator[] (size_t n) const {assert(n < size()); return pb_[n]; }
 
     std::string toString() const { return std::string(pb_, pe_); }
     // Three-way comparison.  Returns value:
