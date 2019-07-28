@@ -51,7 +51,7 @@ cb_ut:
 id_ut:
 	gcc -I ../ -o id_ut snowflakeid_unittest.cpp ut/test_harness.cpp -lstdc++
 geo_ut:
-	gcc -I ../ -o geo_ut geo_unittest.cpp ut/test_harness.cpp ../geo/GeoHash.cpp -lstdc++
+	gcc -I ../ -o geo_ut geo_unittest.cpp ut/test_harness.cpp ../geo/GeoHash.cpp ../geo/geoutils.cpp -lstdc++
 $(OBJDIR)%.o : %.cpp
 	$(CC) $(INC) -c $< -o $@
 $(OBJDIR)%.o : %.c

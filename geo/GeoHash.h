@@ -10,21 +10,7 @@
 #define __COMMON_GEOHASH_H__
 
 #include <cstdint>
-
-struct Coordinate {
-    double lat;
-    double lng;
-};
-
-struct GeoHashBits {
-    uint64_t bits;
-    uint8_t  step;
-};
-
-struct GeoHashRange {
-    double min;
-    double max;
-};
+#include "geoutils.h"
 
 class GeoHash {
 public:
