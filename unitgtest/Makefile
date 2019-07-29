@@ -49,7 +49,7 @@ install :
 cb_ut:
 	gcc -I ../ -o cb_ut circuitbreaker_unittest.cpp ut/test_harness.cpp -lstdc++
 id_ut:
-	gcc -I ../ -o id_ut snowflakeid_unittest.cpp ut/test_harness.cpp -lstdc++
+	gcc -I ../ -o id_ut idgenerator_unittest.cpp ut/test_harness.cpp -lstdc++
 geo_ut:
 	gcc -I ../ -o geo_ut geo_unittest.cpp ut/test_harness.cpp ../geo/GeoHash.cpp ../geo/geoutils.cpp -lstdc++
 $(OBJDIR)%.o : %.cpp
